@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 @Service
 class HelloService {
 
-    @property:Slf4jLogger
+    @Slf4jLogger
     lateinit var log: Logger
 
     fun sayHello(name: String): String {

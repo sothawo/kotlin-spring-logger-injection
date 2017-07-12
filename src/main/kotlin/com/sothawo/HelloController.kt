@@ -25,7 +25,7 @@ class HelloController {
     }
 
     companion object {
-        @property:Slf4jLogger
+        @Slf4jLogger
         lateinit var log: Logger
     }
 }
