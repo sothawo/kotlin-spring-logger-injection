@@ -12,7 +12,6 @@ import kotlin.reflect.full.declaredMemberProperties
  */
 
 @Target(AnnotationTarget.PROPERTY)
-@Retention(AnnotationRetention.RUNTIME)
 annotation class Slf4jLogger
 
 @Component

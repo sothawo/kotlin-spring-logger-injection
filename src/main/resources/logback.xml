@@ -3,7 +3,6 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <logger name="com.sothawo" level="DEBUG"/>
-    <logger name="org.springframework.web.client.RestTemplate" level="INFO" />
 
     <root level="WARN"/>
 </configuration>
