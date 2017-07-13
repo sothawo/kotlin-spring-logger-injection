@@ -1,7 +1,6 @@
 package com.sothawo
 
 import org.slf4j.Logger
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -13,10 +12,7 @@ import org.springframework.web.bind.annotation.RestController
  */
 @RestController()
 @RequestMapping("/hello")
-class HelloController {
-
-    @Autowired
-    lateinit var helloService: HelloService
+class HelloController(val helloService: HelloService) {
 
     @GetMapping("/{name}")
     fun sayHello(@PathVariable name: String): ResponseEntity<String> {
