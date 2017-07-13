@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController
 /**
  * @author P.J. Meisch (pj.meisch@sothawo.com)
  */
-@RestController()
+@RestController
 @RequestMapping("/hello")
 class HelloController(val helloService: HelloService) {
 
