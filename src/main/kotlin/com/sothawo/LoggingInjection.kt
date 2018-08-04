@@ -17,30 +17,29 @@ annotation class Slf4jLogger
 @Component
 class LoggingInjector : BeanPostProcessor {
 
-    override fun postProcessBeforeInitialization(bean: Any?, beanName: String?): Any? {
-        bean?.let {
-            val loggerName = it::class.java.canonicalName
-            processObject(it, loggerName)
-            it::class.companionObjectInstance?.let {
-                processObject(it, loggerName)
+    override fun postProcessBeforeInitialization(bean: Any, beanName: String) =
+            bean.also {
+                try {
+                    val loggerName = it::class.java.canonicalName!!
+                    processObject(it, loggerName)
+                    it::class.companionObjectInstance?.let { companion ->
+                        processObject(companion, loggerName)
+                    }
+                } catch (ignored: Throwable) {
+                    // ignore exceptions, keep the object as it is. not every required class may be found on the classpath as
+                    // SpringBoot tries to load notexisting stuff as well
+                }
             }
-        }
-
-        return bean
-    }
-
-    override fun postProcessAfterInitialization(bean: Any?, beanName: String?) = bean
 
     private fun processObject(target: Any, loggerName: String) {
-        target::class.declaredMemberProperties.forEach {
-            property ->
-            property.annotations
-                    .filter { it is Slf4jLogger }
-                    .forEach {
-                        if (property is KMutableProperty<*>) {
+        target::class.declaredMemberProperties.forEach { property ->
+            if (property is KMutableProperty<*>) {
+                property.annotations
+                        .filterIsInstance<Slf4jLogger>()
+                        .forEach {
                             property.setter.call(target, LoggerFactory.getLogger(loggerName))
                         }
-                    }
+            }
         }
     }
 }
